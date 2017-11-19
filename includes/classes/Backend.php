@@ -20,7 +20,7 @@ class Backend extends Component {
 		add_filter( 'woocommerce_settings_rest_api', [ &$this, 'plugin_settings' ], 20 );
 
 		// WC settings field: Setup button
-		add_action( 'woocommerce_admin_field_rnse_button', [ &$this, 'fulltext_setup_button' ] );
+		add_action( 'woocommerce_admin_field_rnse_button', [ &$this, 'settings_trigger_button' ] );
 	}
 
 	/**
@@ -28,7 +28,7 @@ class Backend extends Component {
 	 *
 	 * @return void
 	 */
-	public function fulltext_setup_button( $value ) {
+	public function settings_trigger_button( $value ) {
 
 		// load JS file
 		wp_enqueue_script( 'rnse-admin', Helpers::enqueue_path() . 'js/admin.js', [ 'jquery' ], Helpers::assets_version(), true );
@@ -41,7 +41,7 @@ class Backend extends Component {
 			<?php echo $field_description['tooltip_html']; ?>
 		</th>
 		<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
-			<button type="button" id="<?php echo esc_attr( $value['id'] ); ?>" class="button"><?php _e( 'Setup', RNSE_DOMAIN ); ?></button>
+			<button type="button" id="<?php echo esc_attr( $value['id'] ); ?>" class="rnse-button button"><?php echo $value['button_label']; ?></button>
 			<p><?php echo $field_description['description']; ?></p>
 		</td>
 		</tr><?php
@@ -53,24 +53,47 @@ class Backend extends Component {
 	 * @return array
 	 */
 	public function plugin_settings( $settings ) {
+
 		return array_merge( $settings, [
 			[
-				'title' => __( 'Search Everything', RNSE_DOMAIN ),
+				'title' => __( 'Search Everything API', RNSE_DOMAIN ),
 				'type'  => 'title',
 				'desc'  => '',
 				'id'    => 'rnse_options',
 			],
 			[
-				'title' => __( 'FULLTEXT Setup', RNSE_DOMAIN ),
-				'desc'  => __( 'Setup MySQL FUllTEXT indexes for quick search results', 'woocommerce' ),
-				'id'    => 'rnse_indexes_setup',
-				'type'  => 'rnse_button',
+				'title'        => __( 'FULLTEXT Setup', RNSE_DOMAIN ),
+				'desc'         => __( 'Setup MySQL FUllTEXT indexes for quick search results', RNSE_DOMAIN ),
+				'id'           => 'rnse_indexes_setup',
+				'type'         => 'rnse_button',
+				'button_label' => __( 'Setup', RNSE_DOMAIN ),
+			],
+			[
+				'title'             => __( 'Cache hours', RNSE_DOMAIN ),
+				'desc'              => __( 'Number of hours to cache search results. <code>0</code> will disable the cache.', RNSE_DOMAIN ),
+				'id'                => 'rnse_cache_hours',
+				'css'               => 'width:50px;',
+				'default'           => 6,
+				'desc_tip'          => false,
+				'type'              => 'number',
+				'custom_attributes' => [
+					'min'  => 0,
+					'step' => 1,
+				],
+			],
+			[
+				'title'        => __( 'Clear Cache', RNSE_DOMAIN ),
+				'desc'         => __( 'Clear current search results cache. Do it if you chanced the cache hours and/or want to force clear now without waiting for it to expire.', RNSE_DOMAIN ),
+				'id'           => 'rnse_clear_cache',
+				'type'         => 'rnse_button',
+				'button_label' => __( 'Clear Cache', RNSE_DOMAIN ),
 			],
 			[
 				'type' => 'sectionend',
 				'id'   => 'rnse_options',
 			],
 		] );
+
 	}
 
 	/**
@@ -115,13 +138,13 @@ class Backend extends Component {
 				}
 
 				$wpdb->query( "ALTER TABLE {$table_name} ADD FULLTEXT {$index_key}({$columns})" );
-				
+
 				if ( $wpdb->last_error ) {
 					return $wpdb->last_error;
 				}
 			}
 		}
-		
+
 		return true;
 	}
 }

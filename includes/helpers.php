@@ -30,6 +30,17 @@ final class Helpers {
 	private static $assets_version;
 
 	/**
+	 * @return void
+	 */
+	public static function set_time_limit() {
+
+		if ( function_exists( 'set_time_limit' ) && false === strpos( ini_get( 'disable_functions' ), 'set_time_limit' ) ) {
+			@set_time_limit( 0 );
+		}
+
+	}
+
+	/**
 	 * Get Assets enqueue base path
 	 *
 	 * @return string

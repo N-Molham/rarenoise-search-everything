@@ -36,6 +36,7 @@ class Ajax_Handler extends Component {
 			$this->_actions = [
 				'search_everything',
 				'setup_search_fulltext',
+				'clear_search_cache',
 			];
 
 			if ( in_array( $action, $this->_actions, true ) ) {
@@ -70,6 +71,20 @@ class Ajax_Handler extends Component {
 		$this->success( rarenoise_search_everything()->frontend->search_everything( $query, $where ) );
 	}
 
+	/**
+	 * @return void
+	 */
+	public function clear_search_cache() {
+
+		if ( false === current_user_can( 'manage_options' ) ) {
+			$this->error( __( 'Insufficient Permissions', RNSE_DOMAIN ) );
+		}
+
+		rarenoise_search_everything()->frontend->clear_cache();
+
+		$this->success( __( 'Done', RNSE_DOMAIN ) );
+	}
+	
 	/**
 	 * @return void
 	 */

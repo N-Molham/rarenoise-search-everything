@@ -6,6 +6,12 @@
  * @package RareNoise_Search_Everything
  */
 class Frontend extends Component {
+
+	/**
+	 * @var string
+	 */
+	protected $_cache_key = 'rnse_search_everything';
+
 	/**
 	 * Constructor
 	 *
@@ -13,6 +19,18 @@ class Frontend extends Component {
 	 */
 	protected function init() {
 		parent::init();
+	}
+
+	/**
+	 * @return void
+	 */
+	public function clear_cache() {
+		/** @var $wpdb \wpdb */
+		global $wpdb;
+
+		Helpers::set_time_limit();
+
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_{$this->_cache_key}_%' OR option_name LIKE '_transient_timeout_{$this->_cache_key}_%'" );
 	}
 
 	/**
@@ -25,9 +43,10 @@ class Frontend extends Component {
 	public function search_everything( $query, $where, $limit = 6 ) {
 
 		// look into caching first
-		$cache_key = 'rnse_search_everything_' . md5( $query . $where );
+		$cache_key   = $this->_cache_key . '_' . md5( $query . $where );
+		$cache_hours = (int) get_option( 'rnse_cache_hours', 6 );
 
-		if ( ! defined( 'RNSE_DISABLE_CACHE' ) || false === RNSE_DISABLE_CACHE ) {
+		if ( $cache_hours <= 0 || ! defined( 'RNSE_DISABLE_CACHE' ) || false === RNSE_DISABLE_CACHE ) {
 
 			$results = get_transient( $cache_key );
 			if ( false !== $results ) {
@@ -49,7 +68,7 @@ class Frontend extends Component {
 
 		}
 
-		set_transient( $cache_key, json_encode( $results ), 6 * HOUR_IN_SECONDS );
+		set_transient( $cache_key, json_encode( $results ), $cache_hours * HOUR_IN_SECONDS );
 
 		/**
 		 * Filter search everywhere results
@@ -99,7 +118,7 @@ ORDER BY relevance DESC, post_date DESC LIMIT %d",
 
 		return $results;
 	}
-	
+
 	/**
 	 * Search artistes
 	 *

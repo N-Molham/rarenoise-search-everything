@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: RareNoise Search Everything 1.0.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/rarenoise-search-everything\n"
-"POT-Creation-Date: 2017-11-19 16:45:52+00:00\n"
+"POT-Creation-Date: 2017-11-19 17:38:56+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,32 +25,52 @@ msgstr ""
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
 
-#: includes/classes/Ajax_Handler.php:61
+#: includes/classes/Ajax_Handler.php:62
 msgid "invalid query argument"
 msgstr ""
 
-#: includes/classes/Ajax_Handler.php:79
+#: includes/classes/Ajax_Handler.php:80 includes/classes/Ajax_Handler.php:94
 msgid "Insufficient Permissions"
 msgstr ""
 
-#: includes/classes/Ajax_Handler.php:85
+#: includes/classes/Ajax_Handler.php:85 includes/classes/Ajax_Handler.php:100
 msgid "Done"
 msgstr ""
 
-#: includes/classes/Backend.php:44
-msgid "Setup"
-msgstr ""
-
-#: includes/classes/Backend.php:58
-msgid "Search Everything"
-msgstr ""
-
-#: includes/classes/Backend.php:64
-msgid "FULLTEXT Setup"
+#: includes/classes/Backend.php:59
+msgid "Search Everything API"
 msgstr ""
 
 #: includes/classes/Backend.php:65
+msgid "FULLTEXT Setup"
+msgstr ""
+
+#: includes/classes/Backend.php:66
 msgid "Setup MySQL FUllTEXT indexes for quick search results"
+msgstr ""
+
+#: includes/classes/Backend.php:69
+msgid "Setup"
+msgstr ""
+
+#: includes/classes/Backend.php:72
+msgid "Cache hours"
+msgstr ""
+
+#: includes/classes/Backend.php:73
+msgid ""
+"Number of hours to cache search results. <code>0</code> will disable the "
+"cache."
+msgstr ""
+
+#: includes/classes/Backend.php:85 includes/classes/Backend.php:89
+msgid "Clear Cache"
+msgstr ""
+
+#: includes/classes/Backend.php:86
+msgid ""
+"Clear current search results cache. Do it if you chanced the cache hours "
+"and/or want to force clear now without waiting for it to expire."
 msgstr ""
 
 #: rarenoise-search-everything.php:108
