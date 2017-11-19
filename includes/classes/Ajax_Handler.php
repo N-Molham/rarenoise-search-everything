@@ -6,6 +6,17 @@
  * @package RareNoise_Search_Everything
  */
 class Ajax_Handler extends Component {
+
+	/**
+	 * @var array
+	 */
+	protected $_actions;
+
+	/**
+	 * @var array
+	 */
+	protected $_nopriv_actions;
+
 	/**
 	 * Constructor
 	 *
@@ -18,11 +29,45 @@ class Ajax_Handler extends Component {
 
 			$action = filter_var( isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : '', FILTER_SANITIZE_STRING );
 
-			// hook into action if it's method exists
-			if ( method_exists( $this, $action ) ) {
+			$this->_nopriv_actions = [
+				'search_everything',
+			];
+
+			$this->_actions = [
+				'search_everything',
+				'setup_search_fulltext',
+			];
+
+			if ( in_array( $action, $this->_actions, true ) ) {
+				// hook into action if it's method exists
 				add_action( 'wp_ajax_' . $action, [ &$this, $action ] );
 			}
+
+			if ( in_array( $action, $this->_nopriv_actions, true ) ) {
+				// hook into action if it's method exists
+				add_action( 'wp_ajax_nopriv_' . $action, [ &$this, $action ] );
+			}
 		}
+	}
+
+	/**
+	 * @return void
+	 */
+	public function search_everything() {
+
+		$query = isset( $_REQUEST['query'] ) ? sanitize_text_field( $_REQUEST['query'] ) : null;
+
+		if ( '' === $query || empty( $query ) || strlen( $query ) > 100 ) {
+			$this->error( __( 'invalid query argument', RNSE_DOMAIN ) );
+		}
+
+		// search for place by default
+		$where = isset( $_REQUEST['where'] ) ? array_map( 'sanitize_key', explode( ',', $_REQUEST['where'] ) ) : null;
+		if ( null === $where || empty( $where ) ) {
+			$where = [ 'releases' ];
+		}
+
+		$this->success( rarenoise_search_everything()->frontend->search_everything( $query, $where ) );
 	}
 
 	/**
