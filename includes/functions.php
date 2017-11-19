@@ -4,25 +4,24 @@
  * Date: 2016-01-22
  * Time: 2:38 AM
  *
- * @package WP_Plugins\Boilerplate
+ * @package RareNoise_Search_Everything
  */
 
-use WP_Plugins\Boilerplate\Component;
-use WP_Plugins\Boilerplate\Plugin;
+use RareNoise_Search_Everything\Component;
+use RareNoise_Search_Everything\Plugin;
 
-if ( !function_exists( 'wp_plugin_boilerplate' ) ):
+if ( ! function_exists( 'rarenoise_search_everything' ) ):
 	/**
 	 * Get plugin instance
 	 *
 	 * @return Plugin
 	 */
-	function wp_plugin_boilerplate()
-	{
+	function rarenoise_search_everything() {
 		return Plugin::get_instance();
 	}
 endif;
 
-if ( !function_exists( 'wppb_component' ) ):
+if ( ! function_exists( 'rnse_component' ) ):
 	/**
 	 * Get plugin component instance
 	 *
@@ -30,18 +29,16 @@ if ( !function_exists( 'wppb_component' ) ):
 	 *
 	 * @return Component|null
 	 */
-	function wppb_component( $component_name )
-	{
-		if ( isset( wp_plugin_boilerplate()->$component_name ) )
-		{
-			return wp_plugin_boilerplate()->$component_name;
+	function rnse_component( $component_name ) {
+		if ( isset( rarenoise_search_everything()->$component_name ) ) {
+			return rarenoise_search_everything()->$component_name;
 		}
 
 		return null;
 	}
 endif;
 
-if ( !function_exists( 'wppb_view' ) ):
+if ( ! function_exists( 'rnse_view' ) ):
 	/**
 	 * Load view
 	 *
@@ -51,32 +48,28 @@ if ( !function_exists( 'wppb_view' ) ):
 	 *
 	 * @return void
 	 */
-	function wppb_view( $view_name, $args = null, $return = false )
-	{
-		if ( $return )
-		{
+	function rnse_view( $view_name, $args = null, $return = false ) {
+		if ( $return ) {
 			// start buffer
 			ob_start();
 		}
 
-		wp_plugin_boilerplate()->load_view( $view_name, $args );
+		rarenoise_search_everything()->load_view( $view_name, $args );
 
-		if ( $return )
-		{
+		if ( $return ) {
 			// get buffer flush
 			return ob_get_clean();
 		}
 	}
 endif;
 
-if ( !function_exists( 'wppb_version' ) ):
+if ( ! function_exists( 'rnse_version' ) ):
 	/**
 	 * Get plugin version
 	 *
 	 * @return string
 	 */
-	function wppb_version()
-	{
-		return wp_plugin_boilerplate()->version;
+	function rnse_version() {
+		return rarenoise_search_everything()->version;
 	}
 endif;

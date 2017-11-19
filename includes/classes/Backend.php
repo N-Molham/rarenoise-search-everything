@@ -1,19 +1,17 @@
-<?php namespace WP_Plugins\Boilerplate;
+<?php namespace RareNoise_Search_Everything;
 
 /**
  * Backend logic
  *
- * @package WP_Plugins\Boilerplate
+ * @package RareNoise_Search_Everything
  */
-class Backend extends Component
-{
+class Backend extends Component {
 	/**
 	 * Constructor
 	 *
 	 * @return void
 	 */
-	protected function init()
-	{
+	protected function init() {
 		parent::init();
 	}
 }
