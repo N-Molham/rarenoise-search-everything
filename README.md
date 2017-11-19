@@ -1,3 +1,3 @@
-# wp-plugins-boilerplate
+# RareNoise Search Everything
 
-For Documentation go to [Wiki](https://github.com/N-Molham/wp-plugins-boilerplate/wiki)
+Site components AJAX search with FUlLTEXT support
