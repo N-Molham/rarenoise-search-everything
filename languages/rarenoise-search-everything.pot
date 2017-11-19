@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: RareNoise Search Everything 1.0.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/rarenoise-search-everything\n"
-"POT-Creation-Date: 2017-11-19 15:13:53+00:00\n"
+"POT-Creation-Date: 2017-11-19 16:03:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,6 +24,30 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
+
+#: includes/classes/Ajax_Handler.php:34
+msgid "Insufficient Permissions"
+msgstr ""
+
+#: includes/classes/Ajax_Handler.php:40
+msgid "Done"
+msgstr ""
+
+#: includes/classes/Backend.php:44
+msgid "Setup"
+msgstr ""
+
+#: includes/classes/Backend.php:58
+msgid "Search Everything"
+msgstr ""
+
+#: includes/classes/Backend.php:64
+msgid "FULLTEXT Setup"
+msgstr ""
+
+#: includes/classes/Backend.php:65
+msgid "Setup MySQL FUllTEXT indexes for quick search results"
+msgstr ""
 
 #: rarenoise-search-everything.php:108
 msgid "Template <code>%s</code> File not found, calculated path: <code>%s</code>"

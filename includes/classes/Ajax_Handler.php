@@ -15,7 +15,7 @@ class Ajax_Handler extends Component {
 		parent::init();
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			
+
 			$action = filter_var( isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : '', FILTER_SANITIZE_STRING );
 
 			// hook into action if it's method exists
@@ -23,6 +23,24 @@ class Ajax_Handler extends Component {
 				add_action( 'wp_ajax_' . $action, [ &$this, $action ] );
 			}
 		}
+	}
+
+	/**
+	 * @return void
+	 */
+	public function setup_search_fulltext() {
+
+		if ( false === current_user_can( 'manage_options' ) ) {
+			$this->error( __( 'Insufficient Permissions', RNSE_DOMAIN ) );
+		}
+
+		$done = rarenoise_search_everything()->backend->setup_full_text_search_indexes();
+
+		if ( true === $done ) {
+			$this->success( __( 'Done', RNSE_DOMAIN ) );
+		}
+
+		$this->debug( $done );
 	}
 
 	/**
