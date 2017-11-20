@@ -96,10 +96,10 @@ class Frontend extends Component {
 		global $wpdb;
 
 		// search blog posts
-		$results = $wpdb->get_results( $wpdb->prepare( "SELECT ID as id, post_title as title, MATCH (post_title) AGAINST (%s IN BOOLEAN MODE) as relevance 
+		$results = $wpdb->get_results( $wpdb->prepare( "SELECT ID as id, post_title as title, MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) as relevance 
 FROM {$wpdb->posts} 
 WHERE post_type = %s AND 
-( MATCH (post_title) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title) AGAINST (%s IN BOOLEAN MODE) ) 
+( MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) ) 
 AND post_status = 'publish'
 ORDER BY relevance DESC, post_date DESC LIMIT %d",
 			'+' . $query . '*',
@@ -132,10 +132,10 @@ ORDER BY relevance DESC, post_date DESC LIMIT %d",
 		global $wpdb;
 
 		// search blog posts
-		$results = $wpdb->get_results( $wpdb->prepare( "SELECT ID as id, post_title as title, MATCH (post_title) AGAINST (%s IN BOOLEAN MODE) as relevance 
+		$results = $wpdb->get_results( $wpdb->prepare( "SELECT ID as id, post_title as title, MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) as relevance 
 FROM {$wpdb->posts} 
 WHERE post_type = %s AND 
-( MATCH (post_title) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title) AGAINST (%s IN BOOLEAN MODE) ) 
+( MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) ) 
 AND post_status = 'publish'
 ORDER BY relevance DESC, post_date DESC LIMIT %d",
 			'+' . $query . '*',
@@ -168,10 +168,10 @@ ORDER BY relevance DESC, post_date DESC LIMIT %d",
 		global $wpdb;
 
 		// search blog posts
-		$results = $wpdb->get_results( $wpdb->prepare( "SELECT ID as id, post_title as title, MATCH (post_title) AGAINST (%s IN BOOLEAN MODE) as relevance 
+		$results = $wpdb->get_results( $wpdb->prepare( "SELECT ID as id, post_title as title, MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) as relevance 
 FROM {$wpdb->posts} 
 WHERE post_type = %s AND 
-( MATCH (post_title) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title) AGAINST (%s IN BOOLEAN MODE) ) 
+( MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) ) 
 AND post_status = 'publish'
 ORDER BY relevance DESC, post_date DESC LIMIT %d",
 			'+' . $query . '*',
