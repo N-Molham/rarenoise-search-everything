@@ -95,6 +95,8 @@ class Frontend extends Component {
 		/** @var $wpdb \wpdb */
 		global $wpdb;
 
+		$query_any = '+' . preg_replace( '/\s/', ' +', $query );
+
 		// search blog posts
 		$results = $wpdb->get_results( $wpdb->prepare( "SELECT ID as id, post_title as title, MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) as relevance 
 FROM {$wpdb->posts} 
@@ -102,10 +104,10 @@ WHERE post_type = %s AND
 ( MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) ) 
 AND post_status = 'publish'
 ORDER BY relevance DESC, post_date DESC LIMIT %d",
-			'+' . $query . '*',
+			$query_any,
 			'product',
-			'+' . $query . '*',
-			$query . '*',
+			'"' . $query . '"',
+			$query_any,
 			$limit
 		) );
 
@@ -120,16 +122,18 @@ ORDER BY relevance DESC, post_date DESC LIMIT %d",
 	}
 
 	/**
-	 * Search artistes
+	 * Search artists
 	 *
 	 * @param string $query
 	 * @param int    $limit
 	 *
 	 * @return array
 	 */
-	public function search_section_artistes( $query, $limit ) {
+	public function search_section_artists( $query, $limit ) {
 		/** @var $wpdb \wpdb */
 		global $wpdb;
+
+		$query_any = '+' . preg_replace( '/\s/', ' +', $query );
 
 		// search blog posts
 		$results = $wpdb->get_results( $wpdb->prepare( "SELECT ID as id, post_title as title, MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) as relevance 
@@ -138,10 +142,10 @@ WHERE post_type = %s AND
 ( MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) ) 
 AND post_status = 'publish'
 ORDER BY relevance DESC, post_date DESC LIMIT %d",
-			'+' . $query . '*',
+			$query_any,
 			'artists',
-			'+' . $query . '*',
-			$query . '*',
+			'"' . $query . '"',
+			$query_any,
 			$limit
 		) );
 
@@ -167,6 +171,8 @@ ORDER BY relevance DESC, post_date DESC LIMIT %d",
 		/** @var $wpdb \wpdb */
 		global $wpdb;
 
+		$query_any = '+' . preg_replace( '/\s/', ' +', $query );
+
 		// search blog posts
 		$results = $wpdb->get_results( $wpdb->prepare( "SELECT ID as id, post_title as title, MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) as relevance 
 FROM {$wpdb->posts} 
@@ -174,10 +180,10 @@ WHERE post_type = %s AND
 ( MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) ) 
 AND post_status = 'publish'
 ORDER BY relevance DESC, post_date DESC LIMIT %d",
-			'+' . $query . '*',
+			$query_any,
 			'post',
-			'+' . $query . '*',
-			$query . '*',
+			'"' . $query . '"',
+			$query_any,
 			$limit
 		) );
 
