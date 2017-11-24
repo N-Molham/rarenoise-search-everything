@@ -12,7 +12,7 @@ a("#search-everything-input").typeWatch({captureLength:2,wait:500,callback:funct
 // clear previous request
 c.abort(),d.addClass("is-loading"),
 // fetch the form
-c=a.post(wc_add_to_cart_params.ajax_url,{action:"search_everything",query:f,where:"posts,artists,releases"},function(a){
+c=a.post(wc_cart_fragments_params.ajax_url,{action:"search_everything",query:f,where:"posts,artists,releases"},function(a){
 // walk through results parts
 for(var c in a.data)
 // skip non-property 

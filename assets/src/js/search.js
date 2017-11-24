@@ -22,7 +22,7 @@
 				$search.addClass( 'is-loading' );
 
 				// fetch the form
-				search_request = $.post( wc_add_to_cart_params.ajax_url, {
+				search_request = $.post( wc_cart_fragments_params.ajax_url, {
 					action: 'search_everything',
 					query : value,
 					where : 'posts,artists,releases'
