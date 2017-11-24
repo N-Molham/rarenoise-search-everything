@@ -16,7 +16,7 @@ c=a.post(wc_cart_fragments_params.ajax_url,{action:"search_everything",query:f,w
 // walk through results parts
 for(var c in a.data)
 // skip non-property 
-if(a.data.hasOwnProperty(c)){var d=a.data[c],f=e.filter("."+c+"-result");if(console.log(f,d),0!==f.length){var g=f.find("ul.results-section-list").empty();if(d.length){
+if(a.data.hasOwnProperty(c)){var d=a.data[c],f=e.filter("."+c+"-result");if(0!==f.length){var g=f.find("ul.results-section-list").empty();if(d.length){
 // results found
 f.addClass("has-results");for(var h=[],i=g.data("template"),j=0;j<d.length;j++)h.push(b(d[j],i));g.html(h.join(""))}else
 // found nothing
@@ -39,7 +39,7 @@ f.highlight&&e.$el.focus(function(){this.select()});
 // Key watcher / clear and reset the timer
 var g=function(a){var b=e.wait,f=!1;
 // If enter key is pressed and not a TEXTAREA
-"undefined"!=typeof a.keyCode&&13===a.keyCode&&"TEXTAREA"!==d&&(console.log("OVERRIDE"),b=1,f=!0);var g=function(){c(e,f)};
+"undefined"!=typeof a.keyCode&&13===a.keyCode&&"TEXTAREA"!==d&&(b=1,f=!0);var g=function(){c(e,f)};
 // Clear timer
 clearTimeout(e.timer),e.timer=setTimeout(g,b)};e.$el.on("keydown paste cut input",g)}}
 // The default input types that are supported

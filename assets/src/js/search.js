@@ -37,8 +37,6 @@
 						var results       = response.data[ part ],
 						    $results_part = $search_results.filter( '.' + part + '-result' );
 
-						console.log( $results_part, results );
-
 						if ( 0 === $results_part.length ) {
 							continue;
 						}
@@ -154,7 +152,6 @@
 					// If enter key is pressed and not a TEXTAREA
 					if ( typeof evt.keyCode !== 'undefined' && evt.keyCode === 13
 						&& elementType !== 'TEXTAREA' ) {
-						console.log( 'OVERRIDE' );
 						timerWait    = 1;
 						overrideBool = true;
 					}
