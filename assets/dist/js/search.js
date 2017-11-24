@@ -8,7 +8,7 @@ function b(b,c){for(var d in b)b.hasOwnProperty(d)&&(c=c.replace(new RegExp("{"+
 // vars
 var c,d=a("#search-everything-results"),e=d.find("section.search-everything-result");
 // Search input typing handler
-a("#search-everything-input").typeWatch({captureLength:1,wait:500,callback:function(f){c&&
+a("#search-everything-input").typeWatch({captureLength:2,wait:500,callback:function(f){c&&
 // clear previous request
 c.abort(),d.addClass("is-loading"),
 // fetch the form

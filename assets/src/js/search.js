@@ -10,7 +10,7 @@
 
 		// Search input typing handler
 		$( '#search-everything-input' ).typeWatch( {
-			captureLength: 1,
+			captureLength: 2,
 			wait         : 500,
 			callback     : function ( value ) {
 
