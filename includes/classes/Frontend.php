@@ -19,6 +19,17 @@ class Frontend extends Component {
 	 */
 	protected function init() {
 		parent::init();
+
+		add_action( 'widgets_init', [ &$this, 'register_widget' ], 20 );
+	}
+
+	/**
+	 * @return void
+	 */
+	public function register_widget() {
+
+		register_widget( '\RareNoise_Search_Everything\Widgets\Search_Widget' );
+
 	}
 
 	/**
@@ -95,19 +106,22 @@ class Frontend extends Component {
 		/** @var $wpdb \wpdb */
 		global $wpdb;
 
-		$query_any = '+' . preg_replace( '/\s/', ' +', $query );
+		$query_any  = '+' . preg_replace( '/\s/', ' +', $query );
+		$query_like = '%' . $wpdb->esc_like( $query ) . '%';
 
 		// search blog posts
 		$results = $wpdb->get_results( $wpdb->prepare( "SELECT ID as id, post_title as title, MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) as relevance 
 FROM {$wpdb->posts} 
 WHERE post_type = %s AND 
-( MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) ) 
+( MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR post_title LIKE %s OR post_content LIKE %s ) 
 AND post_status = 'publish'
 ORDER BY relevance DESC, post_date DESC LIMIT %d",
 			$query_any,
 			'product',
 			'"' . $query . '"',
 			$query_any,
+			$query_like,
+			$query_like,
 			$limit
 		) );
 
@@ -133,19 +147,22 @@ ORDER BY relevance DESC, post_date DESC LIMIT %d",
 		/** @var $wpdb \wpdb */
 		global $wpdb;
 
-		$query_any = '+' . preg_replace( '/\s/', ' +', $query );
+		$query_any  = '+' . preg_replace( '/\s/', ' +', $query );
+		$query_like = '%' . $wpdb->esc_like( $query ) . '%';
 
 		// search blog posts
 		$results = $wpdb->get_results( $wpdb->prepare( "SELECT ID as id, post_title as title, MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) as relevance 
 FROM {$wpdb->posts} 
 WHERE post_type = %s AND 
-( MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) ) 
+( MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR post_title LIKE %s OR post_content LIKE %s ) 
 AND post_status = 'publish'
 ORDER BY relevance DESC, post_date DESC LIMIT %d",
 			$query_any,
 			'artists',
 			'"' . $query . '"',
 			$query_any,
+			$query_like,
+			$query_like,
 			$limit
 		) );
 
@@ -171,19 +188,22 @@ ORDER BY relevance DESC, post_date DESC LIMIT %d",
 		/** @var $wpdb \wpdb */
 		global $wpdb;
 
-		$query_any = '+' . preg_replace( '/\s/', ' +', $query );
+		$query_any  = '+' . preg_replace( '/\s/', ' +', $query );
+		$query_like = '%' . $wpdb->esc_like( $query ) . '%';
 
 		// search blog posts
 		$results = $wpdb->get_results( $wpdb->prepare( "SELECT ID as id, post_title as title, MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) as relevance 
 FROM {$wpdb->posts} 
 WHERE post_type = %s AND 
-( MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) ) 
+( MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR MATCH (post_title,post_content) AGAINST (%s IN BOOLEAN MODE) OR post_title LIKE %s OR post_content LIKE %s ) 
 AND post_status = 'publish'
 ORDER BY relevance DESC, post_date DESC LIMIT %d",
 			$query_any,
 			'post',
 			'"' . $query . '"',
 			$query_any,
+			$query_like,
+			$query_like,
 			$limit
 		) );
 
