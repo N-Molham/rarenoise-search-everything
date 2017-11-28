@@ -4,66 +4,73 @@
 	$( function () {
 
 		// vars
-		var $search         = $( '#search-everything-results' ),
-		    $search_results = $search.find( 'section.search-everything-result' ),
-		    search_request;
+		var search_request;
 
-		// Search input typing handler
-		$( '#search-everything-input' ).typeWatch( {
-			captureLength: 2,
-			wait         : 500,
-			callback     : function ( value ) {
+		$( '.search-everything-input' ).each( function ( index, search_input ) {
+			// vars
+			var $search_input     = $( search_input ),
+			    $search_container = $search_input.siblings( '.search-everything-results' ),
+			    $search_results   = $search_container.find( 'section.search-everything-result' );
 
-				if ( search_request ) {
-					// clear previous request
-					search_request.abort();
-				}
+			// Search input typing handler
+			$search_input.typeWatch( {
+				captureLength: 2,
+				wait         : 500,
+				callback     : function ( $container, $results ) {
+					return function ( value ) {
 
-				$search.addClass( 'is-loading' );
-
-				// fetch the form
-				search_request = $.post( wc_cart_fragments_params.ajax_url, {
-					action: 'search_everything',
-					query : value,
-					where : 'posts,artists,releases'
-				}, function ( response ) {
-					// walk through results parts
-					for ( var part in response.data ) {
-						// skip non-property 
-						if ( !response.data.hasOwnProperty( part ) ) {
-							continue;
+						if ( search_request ) {
+							// clear previous request
+							search_request.abort();
 						}
 
-						var results       = response.data[ part ],
-						    $results_part = $search_results.filter( '.' + part + '-result' );
+						$container.addClass( 'is-loading' );
 
-						if ( 0 === $results_part.length ) {
-							continue;
-						}
+						// fetch the form
+						search_request = $.post( wc_cart_fragments_params.ajax_url, {
+							action: 'search_everything',
+							query : value,
+							where : 'posts,artists,releases'
+						}, function ( response ) {
+							// walk through results parts
+							for ( var part in response.data ) {
+								// skip non-property 
+								if ( !response.data.hasOwnProperty( part ) ) {
+									continue;
+								}
 
-						var $results_list = $results_part.find( 'ul.results-section-list' ).empty();
+								var results       = response.data[ part ],
+								    $results_part = $results.filter( '.' + part + '-result' );
 
-						if ( results.length ) {
-							// results found
-							$results_part.addClass( 'has-results' );
+								if ( 0 === $results_part.length ) {
+									continue;
+								}
 
-							var results_items = [],
-							    item_template = $results_list.data( 'template' );
+								var $results_list = $results_part.find( 'ul.results-section-list' ).empty();
 
-							for ( var i = 0; i < results.length; i++ ) {
-								results_items.push( parse_template( results[ i ], item_template ) );
+								if ( results.length ) {
+									// results found
+									$results_part.addClass( 'has-results' );
+
+									var results_items = [],
+									    item_template = $results_list.data( 'template' );
+
+									for ( var i = 0; i < results.length; i++ ) {
+										results_items.push( parse_template( results[ i ], item_template ) );
+									}
+
+									$results_list.html( results_items.join( '' ) );
+								} else {
+									// found nothing
+									$results_list.html( $results_list.data( 'no-results' ) );
+								}
 							}
-
-							$results_list.html( results_items.join( '' ) );
-						} else {
-							// found nothing
-							$results_list.html( $results_list.data( 'no-results' ) );
-						}
-					}
-				} ).always( function () {
-					$search.removeClass( 'is-loading' );
-				} );
-			}
+						} ).always( function () {
+							$container.removeClass( 'is-loading' );
+						} );
+					};
+				}( $search_container, $search_results )
+			} );
 		} );
 
 	} );
@@ -139,18 +146,18 @@
 
 				// Set focus action (highlight)
 				if ( options.highlight ) {
-					timer.$el.focus( function () {
-						this.select();
+					timer.$el.on( 'focus', function ( e ) {
+						e.currentTarget.select();
 					} );
 				}
 
 				// Key watcher / clear and reset the timer
-				var startWatch = function ( evt ) {
-					var timerWait    = timer.wait;
-					var overrideBool = false;
+				timer.$el.on( 'keydown paste cut input', function ( e ) {
+					var timerWait    = timer.wait,
+					    overrideBool = false;
 
 					// If enter key is pressed and not a TEXTAREA
-					if ( typeof evt.keyCode !== 'undefined' && evt.keyCode === 13
+					if ( typeof e.keyCode !== 'undefined' && e.keyCode === 13
 						&& elementType !== 'TEXTAREA' ) {
 						timerWait    = 1;
 						overrideBool = true;
@@ -163,9 +170,7 @@
 					// Clear timer
 					clearTimeout( timer.timer );
 					timer.timer = setTimeout( timerCallbackFx, timerWait );
-				};
-
-				timer.$el.on( 'keydown paste cut input', startWatch );
+				} );
 			}
 		}
 
