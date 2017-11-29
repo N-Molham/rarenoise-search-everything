@@ -16,7 +16,7 @@
 			$search_input.typeWatch( {
 				captureLength: 2,
 				wait         : 500,
-				callback     : function ( $container, $results ) {
+				callback     : function ( $input, $container, $results ) {
 					return function ( value ) {
 
 						if ( search_request ) {
@@ -25,6 +25,7 @@
 						}
 
 						$container.addClass( 'is-loading' );
+						$input.addClass( 'is-loading' );
 
 						// fetch the form
 						search_request = $.post( wc_cart_fragments_params.ajax_url, {
@@ -67,9 +68,10 @@
 							}
 						} ).always( function () {
 							$container.removeClass( 'is-loading' );
+							$input.removeClass( 'is-loading' );
 						} );
 					};
-				}( $search_container, $search_results )
+				}( $search_input, $search_container, $search_results )
 			} );
 		} );
 

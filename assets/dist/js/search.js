@@ -10,19 +10,19 @@ var c;a(".search-everything-input").each(function(d,e){
 // vars
 var f=a(e),g=f.siblings(".search-everything-results"),h=g.find("section.search-everything-result");
 // Search input typing handler
-f.typeWatch({captureLength:2,wait:500,callback:function(d,e){return function(f){c&&
+f.typeWatch({captureLength:2,wait:500,callback:function(d,e,f){return function(g){c&&
 // clear previous request
-c.abort(),d.addClass("is-loading"),
+c.abort(),e.addClass("is-loading"),d.addClass("is-loading"),
 // fetch the form
-c=a.post(wc_cart_fragments_params.ajax_url,{action:"search_everything",query:f,where:"posts,artists,releases"},function(a){
+c=a.post(wc_cart_fragments_params.ajax_url,{action:"search_everything",query:g,where:"posts,artists,releases"},function(a){
 // walk through results parts
 for(var c in a.data)
 // skip non-property 
-if(a.data.hasOwnProperty(c)){var d=a.data[c],f=e.filter("."+c+"-result");if(0!==f.length){var g=f.find("ul.results-section-list").empty();if(d.length){
+if(a.data.hasOwnProperty(c)){var d=a.data[c],e=f.filter("."+c+"-result");if(0!==e.length){var g=e.find("ul.results-section-list").empty();if(d.length){
 // results found
-f.addClass("has-results");for(var h=[],i=g.data("template"),j=0;j<d.length;j++)h.push(b(d[j],i));g.html(h.join(""))}else
+e.addClass("has-results");for(var h=[],i=g.data("template"),j=0;j<d.length;j++)h.push(b(d[j],i));g.html(h.join(""))}else
 // found nothing
-g.html(g.data("no-results"))}}}).always(function(){d.removeClass("is-loading")})}}(g,h)})})}),/*
+g.html(g.data("no-results"))}}}).always(function(){e.removeClass("is-loading"),d.removeClass("is-loading")})}}(f,g,h)})})}),/*
 	* TypeWatch 3
 	* 
 	* Dual licensed under the MIT and GPL licenses:
