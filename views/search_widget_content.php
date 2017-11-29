@@ -11,7 +11,9 @@
 
 	<input type="text" class="search-everything-input" />
 
-	<div class="search-everything-results">
+	<span class="loading-indicator uk-hidden"><i class="fa fa-refresh fa-spin" aria-hidden="true"></i></span>
+
+	<div class="search-everything-results uk-container uk-container-center uk-hidden">
 
 		<section class="search-everything-result posts-result">
 			<h4 class="results-section-title"><?php _e( 'Posts', RNSE_DOMAIN ); ?></h4>

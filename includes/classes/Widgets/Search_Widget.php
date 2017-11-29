@@ -29,6 +29,10 @@ class Search_Widget extends WP_Widget {
 
 		wp_enqueue_script( 'rnse-search', Helpers::enqueue_path() . 'js/search.js', [ 'jquery' ], Helpers::assets_version(), true );
 
+		wp_localize_script( 'rnse-search', 'rnse_search', [
+			'is_mobile' => wp_is_mobile(),
+		] );
+
 		rnse_view( 'search_widget_content', compact( 'args', 'instance' ) );
 
 	}
