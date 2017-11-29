@@ -22,7 +22,7 @@ if(a.data.hasOwnProperty(c)){var d=a.data[c],e=f.filter("."+c+"-result");if(0!==
 // results found
 e.addClass("has-results");for(var h=[],i=g.data("template"),j=0;j<d.length;j++)h.push(b(d[j],i));g.html(h.join(""))}else
 // found nothing
-g.html(g.data("no-results"))}}}).always(function(){e.removeClass("is-loading"),d.removeClass("is-loading")})}}(f,g,h)})})}),/*
+g.html(g.data("no-results")),e.removeClass("has-results")}}}).always(function(){e.removeClass("is-loading"),d.removeClass("is-loading")})}}(f,g,h)})})}),/*
 	* TypeWatch 3
 	* 
 	* Dual licensed under the MIT and GPL licenses:

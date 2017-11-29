@@ -64,6 +64,7 @@
 								} else {
 									// found nothing
 									$results_list.html( $results_list.data( 'no-results' ) );
+									$results_part.removeClass( 'has-results' );
 								}
 							}
 						} ).always( function () {
