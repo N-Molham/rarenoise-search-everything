@@ -4,9 +4,10 @@
 	$( function () {
 
 		// vars
-		var search_request;
+		var $body = $( 'body' ),
+		    search_request;
 
-		$( 'body' ).on( 'click', '.uk-navbar-flip a', function ( e ) {
+		$body.on( 'click', '.uk-navbar-flip a', function ( e ) {
 			setTimeout( function ( link ) {
 
 				var $input = rnse_search.is_mobile ?
@@ -15,9 +16,18 @@
 
 				if ( $input.length ) {
 					$input.focus();
+					$body.addClass( 'search-everything-overlay-open' );
 				}
 
 			}( e.currentTarget ), 50 );
+		} );
+
+		$body.on( 'click', '.tm-search-bar .uk-float-right a[data-uk-toggle]', function () {
+
+			if ( $body.hasClass( 'search-everything-overlay-open' ) ) {
+				$body.removeClass( 'search-everything-overlay-open' );
+			}
+
 		} );
 
 		$( '.search-everything-input' ).each( function ( index, search_input ) {
@@ -139,8 +149,8 @@
 			// Or override and has capture length or allowSubmit option is true
 			// Or capture length is zero and changed value
 			if ( (value.length >= options.captureLength && value !== timer.text)
-				|| ( override && (value.length >= options.captureLength || options.allowSubmit))
-				|| ( 0 === value.length && timer.text) ) {
+				|| (override && (value.length >= options.captureLength || options.allowSubmit))
+				|| (0 === value.length && timer.text) ) {
 				timer.text = value;
 				timer.cb.call( timer.el, value );
 			}
