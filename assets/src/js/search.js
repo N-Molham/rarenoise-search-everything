@@ -39,7 +39,7 @@
 						}
 
 						$container.addClass( 'is-loading' );
-						$input.addClass( 'is-loading' ).siblings( 'span.loading-indicator' ).removeClass( 'uk-hidden' );
+						$input.addClass( 'is-loading' ).siblings( 'div.loading-indicator' ).removeClass( 'uk-hidden' );
 
 						// fetch the form
 						search_request = $.post( wc_cart_fragments_params.ajax_url, {
@@ -83,7 +83,7 @@
 							}
 						} ).always( function () {
 							$container.removeClass( 'is-loading uk-hidden' );
-							$input.removeClass( 'is-loading' ).siblings( 'span.loading-indicator' ).addClass( 'uk-hidden' );
+							$input.removeClass( 'is-loading' ).siblings( 'div.loading-indicator' ).addClass( 'uk-hidden' );
 						} );
 					};
 				}( $search_input, $search_container, $search_results )

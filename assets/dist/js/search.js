@@ -12,7 +12,7 @@ var f=a(e),g=f.siblings(".search-everything-results"),h=g.find("section.search-e
 // Search input typing handler
 f.typeWatch({captureLength:2,wait:500,callback:function(d,e,f){return function(g){c&&
 // clear previous request
-c.abort(),e.addClass("is-loading"),d.addClass("is-loading").siblings("span.loading-indicator").removeClass("uk-hidden"),
+c.abort(),e.addClass("is-loading"),d.addClass("is-loading").siblings("div.loading-indicator").removeClass("uk-hidden"),
 // fetch the form
 c=a.post(wc_cart_fragments_params.ajax_url,{action:"search_everything",query:g,where:"posts,artists,releases"},function(a){
 // walk through results parts
@@ -22,7 +22,7 @@ if(a.data.hasOwnProperty(c)){var d=a.data[c],e=f.filter("."+c+"-result");if(0!==
 // results found
 e.addClass("has-results");for(var h=[],i=g.data("template"),j=0;j<d.length;j++)h.push(b(d[j],i));g.html(h.join(""))}else
 // found nothing
-g.html(g.data("no-results")),e.removeClass("has-results")}}}).always(function(){e.removeClass("is-loading uk-hidden"),d.removeClass("is-loading").siblings("span.loading-indicator").addClass("uk-hidden")})}}(f,g,h)})})}),/*
+g.html(g.data("no-results")),e.removeClass("has-results")}}}).always(function(){e.removeClass("is-loading uk-hidden"),d.removeClass("is-loading").siblings("div.loading-indicator").addClass("uk-hidden")})}}(f,g,h)})})}),/*
 	* TypeWatch 3
 	* 
 	* Dual licensed under the MIT and GPL licenses:
