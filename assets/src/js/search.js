@@ -4,7 +4,8 @@
 	$( function () {
 
 		// vars
-		var $body = $( 'body' ),
+		var $body      = $( 'body' ),
+		    $body_html = $( 'html,body' ),
 		    search_request;
 
 		$body.on( 'click', '.uk-navbar-flip a', function ( e ) {
@@ -17,6 +18,7 @@
 				if ( $input.length ) {
 					$input.focus();
 					$body.addClass( 'search-everything-overlay-open' );
+					$body_html.css( { 'overflow': 'hidden' } );
 				}
 
 			}( e.currentTarget ), 50 );
@@ -26,6 +28,7 @@
 
 			if ( $body.hasClass( 'search-everything-overlay-open' ) ) {
 				$body.removeClass( 'search-everything-overlay-open' );
+				$body_html.css( { 'overflow': '' } );
 			}
 
 		} );
@@ -206,4 +209,4 @@
 			watchElement( this );
 		} );
 	};
-})( jQuery, window, document );
+})( jQuery );

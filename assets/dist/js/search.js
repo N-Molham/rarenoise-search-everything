@@ -6,7 +6,7 @@
 	 */
 function b(b,c){for(var d in b)b.hasOwnProperty(d)&&(c=c.replace(new RegExp("{"+d+"}","g"),a.isArray(b[d])?b[d].join(", "):b[d]));return c}a(function(){
 // vars
-var c,d=a("body");d.on("click",".uk-navbar-flip a",function(b){setTimeout(function(b){var c=rnse_search.is_mobile?a(b).closest(".uk-navbar-flip").siblings(".tm-search-bar").find("input.search-everything-input"):a(b).closest(".tm-navbar").find("input.search-everything-input:visible");c.length&&(c.focus(),d.addClass("search-everything-overlay-open"))}(b.currentTarget),50)}),d.on("click",".tm-search-bar .uk-float-right a[data-uk-toggle]",function(){d.hasClass("search-everything-overlay-open")&&d.removeClass("search-everything-overlay-open")}),a(".search-everything-input").each(function(d,e){
+var c,d=a("body"),e=a("html,body");d.on("click",".uk-navbar-flip a",function(b){setTimeout(function(b){var c=rnse_search.is_mobile?a(b).closest(".uk-navbar-flip").siblings(".tm-search-bar").find("input.search-everything-input"):a(b).closest(".tm-navbar").find("input.search-everything-input:visible");c.length&&(c.focus(),d.addClass("search-everything-overlay-open"),e.css({overflow:"hidden"}))}(b.currentTarget),50)}),d.on("click",".tm-search-bar .uk-float-right a[data-uk-toggle]",function(){d.hasClass("search-everything-overlay-open")&&(d.removeClass("search-everything-overlay-open"),e.css({overflow:""}))}),a(".search-everything-input").each(function(d,e){
 // vars
 var f=a(e),g=f.siblings(".search-everything-results"),h=g.find("section.search-everything-result");
 // Search input typing handler
@@ -47,4 +47,4 @@ clearTimeout(e.timer),e.timer=setTimeout(g,b)})}}
 // The default input types that are supported
 var e=["TEXT","TEXTAREA","TEL","SEARCH","URL","EMAIL","DATETIME","DATE","MONTH","WEEK","TIME","DATETIME-LOCAL"],f=a.extend({wait:750,callback:function(){},highlight:!0,captureLength:2,allowSubmit:!1,inputTypes:e},b);
 // Watch each element
-return this.each(function(){d(this)})}}(jQuery,window,document);
+return this.each(function(){d(this)})}}(jQuery);
