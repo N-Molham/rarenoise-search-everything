@@ -147,4 +147,18 @@ class Backend extends Component {
 
 		return true;
 	}
+
+	/**
+	 * @return void
+	 */
+	public function clear_cache() {
+		/** @var $wpdb \wpdb */
+		global $wpdb;
+
+		Helpers::set_time_limit();
+
+		$cache_key = rarenoise_search_everything()->frontend->get_cache_key();
+
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_{$cache_key}_%' OR option_name LIKE '_transient_timeout_{$cache_key}_%'" );
+	}
 }

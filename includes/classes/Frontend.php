@@ -19,18 +19,32 @@ class Frontend extends Component {
 	 */
 	protected function init() {
 		parent::init();
+
+		add_action( 'wp_enqueue_scripts', [ &$this, 'load_js' ] );
+
+		add_action( 'wp_footer', [ &$this, 'search_overlay_html' ] );
 	}
 
 	/**
 	 * @return void
 	 */
-	public function clear_cache() {
-		/** @var $wpdb \wpdb */
-		global $wpdb;
+	public function search_overlay_html() {
 
-		Helpers::set_time_limit();
+		rnse_view( 'search_widget_content' );
 
-		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_{$this->_cache_key}_%' OR option_name LIKE '_transient_timeout_{$this->_cache_key}_%'" );
+	}
+
+	/**
+	 * @return void
+	 */
+	public function load_js() {
+
+		wp_enqueue_script( 'rnse-search', Helpers::enqueue_path() . 'js/search.js', [ 'jquery' ], Helpers::assets_version(), true );
+
+		wp_localize_script( 'rnse-search', 'rnse_search', [
+			'is_mobile' => wp_is_mobile(),
+		] );
+
 	}
 
 	/**
@@ -204,5 +218,12 @@ ORDER BY relevance DESC, post_date DESC LIMIT %d",
 		}
 
 		return $results;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_cache_key() {
+		return $this->_cache_key;
 	}
 }

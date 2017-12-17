@@ -7,15 +7,19 @@
  */
 ?>
 
-<?php echo $args['before_widget']; ?>
+<div id="search-everything-overlay" class="search-everything-overlay">
 
-	<input type="text" class="search-everything-input" />
+	<div class="search-everything-field">
+		<input type="text" class="search-everything-input" />
 
-<?php if ( function_exists( 'woofc_spinner_html' ) ) : ?>
-	<div class="loading-indicator uk-hidden"><?php woofc_spinner_html( false, false ); ?></div>
-<?php else: ?>
-	<span class="loading-indicator uk-hidden"><i class="fa fa-refresh fa-spin" aria-hidden="true"></i></span>
-<?php endif; ?>
+		<?php if ( function_exists( 'woofc_spinner_html' ) ) : ?>
+			<div class="loading-indicator uk-hidden"><?php woofc_spinner_html( false, false ); ?></div>
+		<?php else: ?>
+			<span class="loading-indicator uk-hidden"><i class="fa fa-refresh fa-spin" aria-hidden="true"></i></span>
+		<?php endif; ?>
+
+		<a href="#" class="search-everything-trigger" data-search-action="close" data-uk-toggle="{target:'.tm-search-bar'}"><i class="uk-icon-close uk-icon-small"></i></a>
+	</div>
 
 	<div class="search-everything-results uk-container uk-container-center uk-hidden">
 
@@ -45,4 +49,4 @@
 
 	</div>
 
-<?php echo $args['after_widget']; ?>
+</div>

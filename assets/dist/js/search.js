@@ -1,28 +1,26 @@
-!function(a){"use strict";/**
+!function(a,b){"use strict";/**
 	 * @param {Object} item
 	 * @param {String} template
 	 *
 	 * @return {String}
 	 */
-function b(b,c){for(var d in b)b.hasOwnProperty(d)&&(c=c.replace(new RegExp("{"+d+"}","g"),a.isArray(b[d])?b[d].join(", "):b[d]));return c}a(function(){
+function c(b,c){for(var d in b)b.hasOwnProperty(d)&&(c=c.replace(new RegExp("{"+d+"}","g"),a.isArray(b[d])?b[d].join(", "):b[d]));return c}a(function(){
 // vars
-var c,d=a("body"),e=a("html,body");d.on("click",".uk-navbar-flip a",function(b){setTimeout(function(b){var c=rnse_search.is_mobile?a(b).closest(".uk-navbar-flip").siblings(".tm-search-bar").find("input.search-everything-input"):a(b).closest(".tm-navbar").find("input.search-everything-input:visible");c.length&&(c.focus(),d.addClass("search-everything-overlay-open"),e.css({overflow:"hidden"}))}(b.currentTarget),50)}),d.on("click",".tm-search-bar .uk-float-right a[data-uk-toggle]",function(){d.hasClass("search-everything-overlay-open")&&(d.removeClass("search-everything-overlay-open"),e.css({overflow:""}))}),a(".search-everything-input").each(function(d,e){
-// vars
-var f=a(e),g=f.siblings(".search-everything-results"),h=g.find("section.search-everything-result");
+var d,e=a("body"),f=a("#search-everything-overlay");if(!(f.length<1)){var g=f.find(".search-everything-input"),h=f.find(".search-everything-results"),i=h.find("section.search-everything-result");e.on("click rarenoise-click",".search-everything-trigger",function(b){var c=a(b.currentTarget),d=c.data("search-action");switch(c.data("preventDefault")&&b.preventDefault(),d){case"open":e.addClass("search-everything-overlay-open");break;case"close":e.removeClass("search-everything-overlay-open")}e.triggerHandler("search-everything-trigger",c,d)}),"#search-overlay"===b.location.hash&&e.find(".search-everything-trigger[data-search-action=open]:first").trigger("click"),
 // Search input typing handler
-f.typeWatch({captureLength:2,wait:500,callback:function(d,e,f){return function(g){c&&
+g.typeWatch({captureLength:2,wait:500,callback:function(b,e,f){return function(g){d&&
 // clear previous request
-c.abort(),e.addClass("is-loading"),d.addClass("is-loading").siblings("div.loading-indicator").removeClass("uk-hidden"),
+d.abort(),e.addClass("is-loading"),b.addClass("is-loading").siblings("div.loading-indicator").removeClass("uk-hidden"),
 // fetch the form
-c=a.post(wc_cart_fragments_params.ajax_url,{action:"search_everything",query:g,where:"posts,artists,releases"},function(a){
+d=a.post(wc_cart_fragments_params.ajax_url,{action:"search_everything",query:g,where:"posts,artists,releases"},function(a){
 // walk through results parts
-for(var c in a.data)
+for(var b in a.data)
 // skip non-property 
-if(a.data.hasOwnProperty(c)){var d=a.data[c],e=f.filter("."+c+"-result");if(0!==e.length){var g=e.find("ul.results-section-list").empty();if(d.length){
+if(a.data.hasOwnProperty(b)){var d=a.data[b],e=f.filter("."+b+"-result");if(0!==e.length){var g=e.find("ul.results-section-list").empty();if(d.length){
 // results found
-e.addClass("has-results");for(var h=[],i=g.data("template"),j=0;j<d.length;j++)h.push(b(d[j],i));g.html(h.join(""))}else
+e.addClass("has-results");for(var h=[],i=g.data("template"),j=0;j<d.length;j++)h.push(c(d[j],i));g.html(h.join(""))}else
 // found nothing
-g.html(g.data("no-results")),e.removeClass("has-results")}}}).always(function(){e.removeClass("is-loading uk-hidden"),d.removeClass("is-loading").siblings("div.loading-indicator").addClass("uk-hidden")})}}(f,g,h)})})}),/*
+g.html(g.data("no-results")),e.removeClass("has-results")}}}).always(function(){e.removeClass("is-loading uk-hidden"),b.removeClass("is-loading").siblings("div.loading-indicator").addClass("uk-hidden")})}}(g,h,i)})}}),/*
 	* TypeWatch 3
 	* 
 	* Dual licensed under the MIT and GPL licenses:
@@ -47,4 +45,4 @@ clearTimeout(e.timer),e.timer=setTimeout(g,b)})}}
 // The default input types that are supported
 var e=["TEXT","TEXTAREA","TEL","SEARCH","URL","EMAIL","DATETIME","DATE","MONTH","WEEK","TIME","DATETIME-LOCAL"],f=a.extend({wait:750,callback:function(){},highlight:!0,captureLength:2,allowSubmit:!1,inputTypes:e},b);
 // Watch each element
-return this.each(function(){d(this)})}}(jQuery);
+return this.each(function(){d(this)})}}(jQuery,window);

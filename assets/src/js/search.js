@@ -1,106 +1,108 @@
-(function ( $ ) {
+(function ( $, win ) {
 	'use strict';
 
 	$( function () {
 
 		// vars
-		var $body      = $( 'body' ),
-		    $body_html = $( 'html,body' ),
+		var $body    = $( 'body' ),
+		    $overlay = $( '#search-everything-overlay' ),
 		    search_request;
 
-		$body.on( 'click', '.uk-navbar-flip a', function ( e ) {
-			setTimeout( function ( link ) {
+		if ( $overlay.length < 1 ) {
+			return;
+		}
 
-				var $input = rnse_search.is_mobile ?
-					$( link ).closest( '.uk-navbar-flip' ).siblings( '.tm-search-bar' ).find( 'input.search-everything-input' ) :
-					$( link ).closest( '.tm-navbar' ).find( 'input.search-everything-input:visible' );
+		var $search_input     = $overlay.find( '.search-everything-input' ),
+		    $search_container = $overlay.find( '.search-everything-results' ),
+		    $search_results   = $search_container.find( 'section.search-everything-result' );
 
-				if ( $input.length ) {
-					$input.focus();
-					$body.addClass( 'search-everything-overlay-open' );
-					$body_html.css( { 'overflow': 'hidden' } );
-				}
+		$body.on( 'click rarenoise-click', '.search-everything-trigger', function ( e ) {
 
-			}( e.currentTarget ), 50 );
-		} );
+			var $trigger = $( e.currentTarget ),
+			    action   = $trigger.data( 'search-action' );
 
-		$body.on( 'click', '.tm-search-bar .uk-float-right a[data-uk-toggle]', function () {
-
-			if ( $body.hasClass( 'search-everything-overlay-open' ) ) {
-				$body.removeClass( 'search-everything-overlay-open' );
-				$body_html.css( { 'overflow': '' } );
+			if ( $trigger.data( 'preventDefault' ) ) {
+				e.preventDefault();
 			}
 
+			switch ( action ) {
+				case 'open':
+					$body.addClass( 'search-everything-overlay-open' );
+					break;
+
+				case 'close':
+					$body.removeClass( 'search-everything-overlay-open' );
+					break;
+			}
+
+			$body.triggerHandler( 'search-everything-trigger', $trigger, action );
 		} );
 
-		$( '.search-everything-input' ).each( function ( index, search_input ) {
-			// vars
-			var $search_input     = $( search_input ),
-			    $search_container = $search_input.siblings( '.search-everything-results' ),
-			    $search_results   = $search_container.find( 'section.search-everything-result' );
+		if ( '#search-overlay' === win.location.hash ) {
+			$body.find( '.search-everything-trigger[data-search-action=open]:first' ).trigger( 'click' );
+		}
 
-			// Search input typing handler
-			$search_input.typeWatch( {
-				captureLength: 2,
-				wait         : 500,
-				callback     : function ( $input, $container, $results ) {
-					return function ( value ) {
+		// Search input typing handler
+		$search_input.typeWatch( {
+			captureLength: 2,
+			wait         : 500,
+			callback     : function ( $input, $container, $results ) {
+				return function ( value ) {
 
-						if ( search_request ) {
-							// clear previous request
-							search_request.abort();
-						}
+					if ( search_request ) {
+						// clear previous request
+						search_request.abort();
+					}
 
-						$container.addClass( 'is-loading' );
-						$input.addClass( 'is-loading' ).siblings( 'div.loading-indicator' ).removeClass( 'uk-hidden' );
+					$container.addClass( 'is-loading' );
+					$input.addClass( 'is-loading' ).siblings( 'div.loading-indicator' ).removeClass( 'uk-hidden' );
 
-						// fetch the form
-						search_request = $.post( wc_cart_fragments_params.ajax_url, {
-							action: 'search_everything',
-							query : value,
-							where : 'posts,artists,releases'
-						}, function ( response ) {
-							// walk through results parts
-							for ( var part in response.data ) {
-								// skip non-property 
-								if ( !response.data.hasOwnProperty( part ) ) {
-									continue;
-								}
-
-								var results       = response.data[ part ],
-								    $results_part = $results.filter( '.' + part + '-result' );
-
-								if ( 0 === $results_part.length ) {
-									continue;
-								}
-
-								var $results_list = $results_part.find( 'ul.results-section-list' ).empty();
-
-								if ( results.length ) {
-									// results found
-									$results_part.addClass( 'has-results' );
-
-									var results_items = [],
-									    item_template = $results_list.data( 'template' );
-
-									for ( var i = 0; i < results.length; i++ ) {
-										results_items.push( parse_template( results[ i ], item_template ) );
-									}
-
-									$results_list.html( results_items.join( '' ) );
-								} else {
-									// found nothing
-									$results_list.html( $results_list.data( 'no-results' ) );
-									$results_part.removeClass( 'has-results' );
-								}
+					// fetch the form
+					search_request = $.post( wc_cart_fragments_params.ajax_url, {
+						action: 'search_everything',
+						query : value,
+						where : 'posts,artists,releases'
+					}, function ( response ) {
+						// walk through results parts
+						for ( var part in response.data ) {
+							// skip non-property 
+							if ( !response.data.hasOwnProperty( part ) ) {
+								continue;
 							}
-						} ).always( function () {
-							$container.removeClass( 'is-loading uk-hidden' );
-							$input.removeClass( 'is-loading' ).siblings( 'div.loading-indicator' ).addClass( 'uk-hidden' );
-						} );
-					};
-				}( $search_input, $search_container, $search_results )
-			} );
+
+							var results       = response.data[ part ],
+							    $results_part = $results.filter( '.' + part + '-result' );
+
+							if ( 0 === $results_part.length ) {
+								continue;
+							}
+
+							var $results_list = $results_part.find( 'ul.results-section-list' ).empty();
+
+							if ( results.length ) {
+								// results found
+								$results_part.addClass( 'has-results' );
+
+								var results_items = [],
+								    item_template = $results_list.data( 'template' );
+
+								for ( var i = 0; i < results.length; i++ ) {
+									results_items.push( parse_template( results[ i ], item_template ) );
+								}
+
+								$results_list.html( results_items.join( '' ) );
+							} else {
+								// found nothing
+								$results_list.html( $results_list.data( 'no-results' ) );
+								$results_part.removeClass( 'has-results' );
+							}
+						}
+					} ).always( function () {
+						$container.removeClass( 'is-loading uk-hidden' );
+						$input.removeClass( 'is-loading' ).siblings( 'div.loading-indicator' ).addClass( 'uk-hidden' );
+					} );
+				};
+			}( $search_input, $search_container, $search_results )
 		} );
 
 	} );
@@ -209,4 +211,4 @@
 			watchElement( this );
 		} );
 	};
-})( jQuery );
+})( jQuery, window );

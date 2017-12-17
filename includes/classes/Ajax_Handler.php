@@ -80,7 +80,7 @@ class Ajax_Handler extends Component {
 			$this->error( __( 'Insufficient Permissions', RNSE_DOMAIN ) );
 		}
 
-		rarenoise_search_everything()->frontend->clear_cache();
+		rarenoise_search_everything()->backend->clear_cache();
 
 		$this->success( __( 'Done', RNSE_DOMAIN ) );
 	}
