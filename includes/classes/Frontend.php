@@ -19,17 +19,6 @@ class Frontend extends Component {
 	 */
 	protected function init() {
 		parent::init();
-
-		add_action( 'widgets_init', [ &$this, 'register_widget' ], 20 );
-	}
-
-	/**
-	 * @return void
-	 */
-	public function register_widget() {
-
-		register_widget( '\RareNoise_Search_Everything\Widgets\Search_Widget' );
-
 	}
 
 	/**
