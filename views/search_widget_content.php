@@ -9,7 +9,7 @@
 
 <div id="search-everything-overlay" class="search-everything-overlay">
 
-	<div class="search-everything-field">
+	<div class="search-everything-field uk-container">
 		<input type="text" class="search-everything-input" />
 
 		<?php if ( function_exists( 'woofc_spinner_html' ) ) : ?>
@@ -21,7 +21,7 @@
 		<a href="#" class="search-everything-trigger" data-search-action="close" data-uk-toggle="{target:'.tm-search-bar'}"><i class="uk-icon-close uk-icon-small"></i></a>
 	</div>
 
-	<div class="search-everything-results uk-container uk-container-center uk-hidden">
+	<div class="search-everything-results uk-container uk-hidden">
 
 		<section class="search-everything-result posts-result">
 			<h4 class="results-section-title"><?php _e( 'Posts', RNSE_DOMAIN ); ?></h4>

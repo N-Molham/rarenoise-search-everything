@@ -6,13 +6,13 @@
 	 */
 function c(b,c){for(var d in b)b.hasOwnProperty(d)&&(c=c.replace(new RegExp("{"+d+"}","g"),a.isArray(b[d])?b[d].join(", "):b[d]));return c}a(function(){
 // vars
-var d,e=a("body"),f=a("#search-everything-overlay");if(!(f.length<1)){var g=f.find(".search-everything-input"),h=f.find(".search-everything-results"),i=h.find("section.search-everything-result");e.on("click rarenoise-click",".search-everything-trigger",function(b){var c=a(b.currentTarget),d=c.data("search-action");switch(c.data("preventDefault")&&b.preventDefault(),d){case"open":e.addClass("search-everything-overlay-open");break;case"close":e.removeClass("search-everything-overlay-open")}e.triggerHandler("search-everything-trigger",c,d)}),"#search-overlay"===b.location.hash&&e.find(".search-everything-trigger[data-search-action=open]:first").trigger("click"),
+var d,e=a("body"),f=a("#search-everything-overlay");if(!(f.length<1)){var g=f.find("input.search-everything-input"),h=f.find(".search-everything-results"),i=h.find("section.search-everything-result"),j=f.find("div.loading-indicator");e.on("click rarenoise-click",".search-everything-trigger",function(b){var c=a(b.currentTarget),d=c.data("search-action");switch(c.data("preventDefault")&&b.preventDefault(),d){case"open":e.addClass("search-everything-overlay-open"),g.focus();break;case"close":e.removeClass("search-everything-overlay-open")}e.triggerHandler("search-everything-trigger",c,d)}),"#search-overlay"===b.location.hash&&e.find(".search-everything-trigger[data-search-action=open]:first").trigger("click"),
 // Search input typing handler
-g.typeWatch({captureLength:2,wait:500,callback:function(b,e,f){return function(g){d&&
+g.typeWatch({captureLength:2,wait:500,callback:function(b,e,f,g){return function(h){d&&
 // clear previous request
-d.abort(),e.addClass("is-loading"),b.addClass("is-loading").siblings("div.loading-indicator").removeClass("uk-hidden"),
+d.abort(),e.addClass("is-loading"),b.addClass("is-loading"),g.removeClass("uk-hidden"),
 // fetch the form
-d=a.post(wc_cart_fragments_params.ajax_url,{action:"search_everything",query:g,where:"posts,artists,releases"},function(a){
+d=a.post(wc_cart_fragments_params.ajax_url,{action:"search_everything",query:h,where:"posts,artists,releases"},function(a){
 // walk through results parts
 for(var b in a.data)
 // skip non-property 
@@ -20,7 +20,7 @@ if(a.data.hasOwnProperty(b)){var d=a.data[b],e=f.filter("."+b+"-result");if(0!==
 // results found
 e.addClass("has-results");for(var h=[],i=g.data("template"),j=0;j<d.length;j++)h.push(c(d[j],i));g.html(h.join(""))}else
 // found nothing
-g.html(g.data("no-results")),e.removeClass("has-results")}}}).always(function(){e.removeClass("is-loading uk-hidden"),b.removeClass("is-loading").siblings("div.loading-indicator").addClass("uk-hidden")})}}(g,h,i)})}}),/*
+g.html(g.data("no-results")),e.removeClass("has-results")}}}).always(function(){e.removeClass("is-loading uk-hidden"),b.removeClass("is-loading"),g.addClass("uk-hidden")})}}(g,h,i,j)})}}),/*
 	* TypeWatch 3
 	* 
 	* Dual licensed under the MIT and GPL licenses:

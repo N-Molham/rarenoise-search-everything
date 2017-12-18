@@ -12,9 +12,10 @@
 			return;
 		}
 
-		var $search_input     = $overlay.find( '.search-everything-input' ),
-		    $search_container = $overlay.find( '.search-everything-results' ),
-		    $search_results   = $search_container.find( 'section.search-everything-result' );
+		var $search_input      = $overlay.find( 'input.search-everything-input' ),
+		    $search_container  = $overlay.find( '.search-everything-results' ),
+		    $search_results    = $search_container.find( 'section.search-everything-result' ),
+		    $loading_indicator = $overlay.find( 'div.loading-indicator' );
 
 		$body.on( 'click rarenoise-click', '.search-everything-trigger', function ( e ) {
 
@@ -28,6 +29,7 @@
 			switch ( action ) {
 				case 'open':
 					$body.addClass( 'search-everything-overlay-open' );
+					$search_input.focus();
 					break;
 
 				case 'close':
@@ -46,7 +48,7 @@
 		$search_input.typeWatch( {
 			captureLength: 2,
 			wait         : 500,
-			callback     : function ( $input, $container, $results ) {
+			callback     : function ( $input, $container, $results, $loading ) {
 				return function ( value ) {
 
 					if ( search_request ) {
@@ -55,7 +57,8 @@
 					}
 
 					$container.addClass( 'is-loading' );
-					$input.addClass( 'is-loading' ).siblings( 'div.loading-indicator' ).removeClass( 'uk-hidden' );
+					$input.addClass( 'is-loading' );
+					$loading.removeClass( 'uk-hidden' );
 
 					// fetch the form
 					search_request = $.post( wc_cart_fragments_params.ajax_url, {
@@ -99,10 +102,11 @@
 						}
 					} ).always( function () {
 						$container.removeClass( 'is-loading uk-hidden' );
-						$input.removeClass( 'is-loading' ).siblings( 'div.loading-indicator' ).addClass( 'uk-hidden' );
+						$input.removeClass( 'is-loading' );
+						$loading.addClass( 'uk-hidden' );
 					} );
 				};
-			}( $search_input, $search_container, $search_results )
+			}( $search_input, $search_container, $search_results, $loading_indicator )
 		} );
 
 	} );
