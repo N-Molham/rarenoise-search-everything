@@ -6,7 +6,7 @@
 	 */
 function c(b,c){for(var d in b)b.hasOwnProperty(d)&&(c=c.replace(new RegExp("{"+d+"}","g"),a.isArray(b[d])?b[d].join(", "):b[d]));return c}a(function(){
 // vars
-var d,e=a("body"),f=a("#search-everything-overlay");if(!(f.length<1)){var g=f.find("input.search-everything-input"),h=f.find(".search-everything-results"),i=h.find("section.search-everything-result"),j=f.find("div.loading-indicator");e.on("click rarenoise-click",".search-everything-trigger",function(b){var c=a(b.currentTarget),d=c.data("search-action");switch(c.data("preventDefault")&&b.preventDefault(),d){case"open":e.addClass("search-everything-overlay-open"),g.focus();break;case"close":e.removeClass("search-everything-overlay-open")}e.triggerHandler("search-everything-trigger",[c,d])}),e.on("search-everything-trigger",function(a,b,c){"open"===c&&setTimeout(function(){
+var d,e=a("body"),f=a("#search-everything-overlay");if(!(f.length<1)){var g=f.find("input.search-everything-input"),h=f.find(".search-everything-results"),i=h.find("section.search-everything-result"),j=f.find("div.loading-indicator");e.on("click rarenoise-click",".search-everything-trigger",function(b){var c=a(b.currentTarget),d=c.data("search-action");switch(c.data("preventDefault")&&b.preventDefault(),d){case"open":e.addClass("search-everything-overlay-open"),setTimeout(function(){g.focus()},10);break;case"close":e.removeClass("search-everything-overlay-open")}e.triggerHandler("search-everything-trigger",[c,d])}),e.on("search-everything-trigger",function(a,b,c){"open"===c&&setTimeout(function(){
 // force overlay to scroll to top
 f.scrollTop(0)},10)}),"#search-overlay"===b.location.hash&&e.find(".search-everything-trigger[data-search-action=open]:first").trigger("click"),
 // Search input typing handler

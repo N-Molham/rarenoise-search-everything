@@ -29,7 +29,9 @@
 			switch ( action ) {
 				case 'open':
 					$body.addClass( 'search-everything-overlay-open' );
-					$search_input.focus();
+					setTimeout( function () {
+						$search_input.focus();
+					}, 10 );
 					break;
 
 				case 'close':
