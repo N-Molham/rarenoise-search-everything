@@ -37,7 +37,18 @@
 					break;
 			}
 
-			$body.triggerHandler( 'search-everything-trigger', $trigger, action );
+			$body.triggerHandler( 'search-everything-trigger', [ $trigger, action ] );
+		} );
+
+		$body.on( 'search-everything-trigger', function ( e, $trigger, action ) {
+
+			if ( 'open' === action ) {
+				setTimeout( function () {
+					// force overlay to scroll to top
+					$overlay.scrollTop( 0 );
+				}, 10 );
+			}
+
 		} );
 
 		if ( '#search-overlay' === win.location.hash ) {
